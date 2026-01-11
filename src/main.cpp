@@ -1,4 +1,4 @@
-#include "cbf_api.hpp"
+#include "includes.hpp"
 
 #include <limits>
 
@@ -175,45 +175,6 @@ void updateKeybinds() {
 	}
 }
 #endif
-
-GEODE_EVENT_EXPORT void refreshKeybindCache() {
-#ifdef GEODE_IS_WINDOWS
-	updateKeybinds();
-#endif
-}
-
-GEODE_EVENT_EXPORT void clearHeldInputs() {
-	heldInputs.clear();
-}
-
-GEODE_EVENT_EXPORT void clearHeldInputsForKeys(std::vector<uint16_t> const& keys) {
-	for (auto key : keys) {
-		heldInputs.erase(key);
-	}
-}
-
-GEODE_EVENT_EXPORT void clearInputQueues() {
-	{
-		std::lock_guard lock(inputQueueLock);
-		inputQueue = {};
-		inputQueueCopy = {};
-	}
-	stepQueue = {};
-}
-
-GEODE_EVENT_EXPORT void injectInput(PlayerButton button, bool down, TimestampType timestamp, bool isPlayer1) {
-	InputEvent input {
-		.time = timestamp,
-		.inputType = button,
-		.inputState = down,
-		.isPlayer1 = isPlayer1,
-	};
-
-	{
-		std::lock_guard lock(inputQueueLock);
-		inputQueue.emplace_back(input);
-	}
-}
 
 /*
 rewritten PlayerObject::resetCollisionLog() since it's inlined in GD 2.2074 on Windows
