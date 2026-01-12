@@ -3,20 +3,6 @@
 #include <Geode/Geode.hpp>
 #include "linuxeventcodes.hpp"
 
-#if defined(_MSC_VER)
-    #define CBF_PACK_PUSH __pragma(pack(push, 1))
-    #define CBF_PACK_POP  __pragma(pack(pop))
-    #define CBF_PACKED
-#else
-    #define CBF_PACK_PUSH
-    #define CBF_PACK_POP
-    #define CBF_PACKED __attribute__((packed))
-#endif
-
-#ifndef CBF_WINE_LINUX_INPUT
-    #define CBF_WINE_LINUX_INPUT 0
-#endif
-
 enum DeviceType : int8_t {
     MOUSE,
     TOUCHPAD,
@@ -26,15 +12,13 @@ enum DeviceType : int8_t {
     UNKNOWN
 };
 
-CBF_PACK_PUSH
-struct CBF_PACKED LinuxInputEvent {
+struct __attribute__((packed)) LinuxInputEvent {
     LARGE_INTEGER time;
     USHORT type;
     USHORT code;
     int value;
     DeviceType deviceType;
 };
-CBF_PACK_POP
 
 extern HANDLE hSharedMem;
 extern HANDLE hMutex;

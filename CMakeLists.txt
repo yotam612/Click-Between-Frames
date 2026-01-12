@@ -12,7 +12,6 @@ project(ClickBetweenFrames VERSION 1.0.0)
 
 add_library(${PROJECT_NAME} SHARED
     "src/main.cpp"
-    "src/api.cpp"
 )
 
 if (WIN32)
@@ -36,5 +35,3 @@ endif()
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
 setup_geode_mod(${PROJECT_NAME})
-
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

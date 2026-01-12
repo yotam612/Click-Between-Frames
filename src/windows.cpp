@@ -520,7 +520,6 @@ void windowsSetup() {
 		log::info("Wine {}", sys);
 
 		if (sys == "Linux") Mod::get()->setSavedValue<bool>("you-must-be-on-linux-to-change-this", true);
-#if CBF_WINE_LINUX_INPUT
 		if (sys == "Linux" && Mod::get()->getSettingValue<bool>("wine-workaround")) { // background raw keyboard input doesn't work in Wine
 			linuxNative = true;
 			log::info("Linux native");
@@ -574,7 +573,6 @@ void windowsSetup() {
 				return;
 			}
 		}
-#endif
 	}
 
 	if (!linuxNative) {
